@@ -52,7 +52,7 @@ def create_cards():
         wind_cards.append(cards("north", 9, 0, "word", None))
     print(Fore.LIGHTYELLOW_EX + "[Caution] Creating cards...Done")
     print(Style.RESET_ALL)
-    sleep(1.5)
+    sleep(0.5)
     os.system("clear")
 
 
@@ -79,7 +79,7 @@ if len(char_cards) + len(dot_cards) + len(bamboo_cards) + len(dragon_cards) + le
     print(Style.RESET_ALL)
 print(Fore.LIGHTYELLOW_EX + "[Caution] Checking the number of cards...Done")
 print(Style.RESET_ALL)
-sleep(1.5)
+sleep(0.5)
 os.system("clear")
 
 
@@ -122,7 +122,7 @@ def assign_cards():
         i.Cposition = "player4"
     print(Fore.LIGHTYELLOW_EX + "[Caution] Assigning cards...Done")
     print(Style.RESET_ALL)
-    sleep(1.5)
+    sleep(0.5)
     os.system("clear")
 
 
@@ -134,51 +134,148 @@ def sort_cards():
     cards_player4.sort(key=lambda x: (x.Csort, x.Cvalue))
 
 
-def display_cards():
+def display_cards(player):
     HandDeck.clear()
-    for i in cards_player1:
-        if i.Cproperty != "word":
-            HandDeck.append(str(i.Ctype + str(i.Cvalue)))
-        elif i.Cproperty == "word":
-            HandDeck.append(str(i.Ctype))
-    print(Fore.LIGHTGREEN_EX + str(HandDeck))
-    print(Style.RESET_ALL)
-    sleep(1.5)
-    os.system("clear")
+    if player == 1:
+        for i in cards_player1:
+            if i.Cproperty != "word":
+                HandDeck.append(str(i.Ctype + str(i.Cvalue)))
+            elif i.Cproperty == "word":
+                HandDeck.append(str(i.Ctype))
+        print(Fore.LIGHTGREEN_EX + "HAND DECK OF PLAYER 1: " + str(HandDeck))
+        print(Style.RESET_ALL)
+        sleep(0.5)
+        os.system("clear")
+    if player == 2:
+        for i in cards_player2:
+            if i.Cproperty != "word":
+                HandDeck.append(str(i.Ctype + str(i.Cvalue)))
+            elif i.Cproperty == "word":
+                HandDeck.append(str(i.Ctype))
+        print(Fore.LIGHTGREEN_EX + "HAND DECK OF PLAYER 2: " + str(HandDeck))
+        print(Style.RESET_ALL)
+        sleep(0.5)
+        os.system("clear")
+    if player == 3:
+        for i in cards_player3:
+            if i.Cproperty != "word":
+                HandDeck.append(str(i.Ctype + str(i.Cvalue)))
+            elif i.Cproperty == "word":
+                HandDeck.append(str(i.Ctype))
+        print(Fore.LIGHTGREEN_EX + "HAND DECK OF PLAYER 3: " + str(HandDeck))
+        print(Style.RESET_ALL)
+        sleep(0.5)
+        os.system("clear")
+    if player == 4:
+        for i in cards_player4:
+            if i.Cproperty != "word":
+                HandDeck.append(str(i.Ctype + str(i.Cvalue)))
+            elif i.Cproperty == "word":
+                HandDeck.append(str(i.Ctype))
+        print(Fore.LIGHTGREEN_EX + "HAND DECK OF PLAYER 4: " + str(HandDeck))
+        print(Style.RESET_ALL)
+        sleep(0.5)
+        os.system("clear")
 
 
-def discard():
-    flag = 0
-    display_cards()
-    ToBeDiscard = input("which card to discard? (cards in list):")
-    for i in cards_player1:
-        if (i.Ctype + str(i.Cvalue)) == ToBeDiscard:
-            cards_player1.remove(i)
-            cards_player1_discard.append(i)
-            display_cards()
-            flag = 1
-            break
-        if ToBeDiscard == "white" or ToBeDiscard == "rich" or ToBeDiscard == "middle" or ToBeDiscard == "east" or ToBeDiscard == "south" or ToBeDiscard == "west" or ToBeDiscard == "north":
-            if i.Ctype == ToBeDiscard:
+def discard(player):
+    if player == 1:
+        flag = 0
+        display_cards(1)
+        ToBeDiscard = input("which card to discard? (cards in list):")
+        for i in cards_player1:
+            if (i.Ctype + str(i.Cvalue)) == ToBeDiscard:
                 cards_player1.remove(i)
                 cards_player1_discard.append(i)
-                display_cards()
+                display_cards(1)
                 flag = 1
                 break
-        if flag == 0:
-            print("[Error] Invalid card")
-            sleep(1.5)
-            os.system("clear")
-            discard()
-
-
-
-
+            elif ToBeDiscard == "white" or ToBeDiscard == "rich" or ToBeDiscard == "middle" or ToBeDiscard == "east" or ToBeDiscard == "south" or ToBeDiscard == "west" or ToBeDiscard == "north":
+                if i.Ctype == ToBeDiscard:
+                    cards_player1.remove(i)
+                    cards_player1_discard.append(i)
+                    display_cards(1)
+                    flag = 1
+                    break
+            elif flag == 0:
+                print("[Error] Invalid card")
+                sleep(0.5)
+                os.system("clear")
+                discard(1)
+    if player == 2:
+        flag = 0
+        display_cards(2)
+        ToBeDiscard = input("which card to discard? (cards in list):")
+        for i in cards_player2:
+            if (i.Ctype + str(i.Cvalue)) == ToBeDiscard:
+                cards_player2.remove(i)
+                cards_player2_discard.append(i)
+                display_cards(2)
+                flag = 1
+                break
+            elif ToBeDiscard == "white" or ToBeDiscard == "rich" or ToBeDiscard == "middle" or ToBeDiscard == "east" or ToBeDiscard == "south" or ToBeDiscard == "west" or ToBeDiscard == "north":
+                if i.Ctype == ToBeDiscard:
+                    cards_player2.remove(i)
+                    cards_player2_discard.append(i)
+                    display_cards(2)
+                    flag = 1
+                    break
+            elif flag == 0:
+                print("[Error] Invalid card")
+                sleep(0.5)
+                os.system("clear")
+                discard(2)
+    if player == 3:
+        flag = 0
+        display_cards(3)
+        ToBeDiscard = input("which card to discard? (cards in list):")
+        for i in cards_player3:
+            if (i.Ctype + str(i.Cvalue)) == ToBeDiscard:
+                cards_player3.remove(i)
+                cards_player3_discard.append(i)
+                display_cards(3)
+                flag = 1
+                break
+            elif ToBeDiscard == "white" or ToBeDiscard == "rich" or ToBeDiscard == "middle" or ToBeDiscard == "east" or ToBeDiscard == "south" or ToBeDiscard == "west" or ToBeDiscard == "north":
+                if i.Ctype == ToBeDiscard:
+                    cards_player3.remove(i)
+                    cards_player3_discard.append(i)
+                    display_cards(3)
+                    flag = 1
+                    break
+            elif flag == 0:
+                print("[Error] Invalid card")
+                sleep(0.5)
+                os.system("clear")
+                discard(3)
+    if player == 4:
+        flag = 0
+        display_cards(4)
+        ToBeDiscard = input("which card to discard? (cards in list):")
+        for i in cards_player4:
+            if (i.Ctype + str(i.Cvalue)) == ToBeDiscard:
+                cards_player4.remove(i)
+                cards_player4_discard.append(i)
+                display_cards(4)
+                flag = 1
+                break
+            elif ToBeDiscard == "white" or ToBeDiscard == "rich" or ToBeDiscard == "middle" or ToBeDiscard == "east" or ToBeDiscard == "south" or ToBeDiscard == "west" or ToBeDiscard == "north":
+                if i.Ctype == ToBeDiscard:
+                    cards_player4.remove(i)
+                    cards_player4_discard.append(i)
+                    display_cards(4)
+                    flag = 1
+                    break
+            elif flag == 0:
+                print("[Error] Invalid card")
+                sleep(0.5)
+                os.system("clear")
+                discard(4)
 
 
 move_shuffle()
 assign_cards()
 sort_cards()
 while 1:
-    discard()
+    discard(int(input("select a player to discard a card:")))
     os.system("clear")
