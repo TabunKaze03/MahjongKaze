@@ -13,7 +13,10 @@ class cards:
         self.Cposition = Cposition
 
 
-HandDeck = []
+HandDeck1 = []
+HandDeck2 = []
+HandDeck3 = []
+HandDeck4 = []
 
 all_cards = []
 char_cards = []
@@ -32,6 +35,13 @@ cards_player1_discard = []
 cards_player2_discard = []
 cards_player3_discard = []
 cards_player4_discard = []
+
+CanPon1 = []
+CanPon2 = []
+CanPon3 = []
+CanPon4 = []
+
+LastP = 0
 
 
 def create_cards():
@@ -52,7 +62,7 @@ def create_cards():
         wind_cards.append(cards("north", 9, 0, "word", None))
     print(Fore.LIGHTYELLOW_EX + "[Caution] Creating cards...Done")
     print(Style.RESET_ALL)
-    sleep(0.5)
+    sleep(0.2)
     os.system("clear")
 
 
@@ -79,7 +89,7 @@ if len(char_cards) + len(dot_cards) + len(bamboo_cards) + len(dragon_cards) + le
     print(Style.RESET_ALL)
 print(Fore.LIGHTYELLOW_EX + "[Caution] Checking the number of cards...Done")
 print(Style.RESET_ALL)
-sleep(0.5)
+sleep(0.2)
 os.system("clear")
 
 
@@ -91,7 +101,7 @@ def move_shuffle():
     random.shuffle(cards_mountain)
     print(Fore.LIGHTYELLOW_EX + "[Caution] Shuffling cards...Done")
     print(Style.RESET_ALL)
-    sleep(1.5)
+    sleep(0.2)
     os.system("clear")
 
 
@@ -100,7 +110,7 @@ def assign_winds():
     list = ["east", "south", "west", "north"]
     print(Fore.LIGHTYELLOW_EX + "[Caution] Assigning winds...")
     print(Style.RESET_ALL)
-    sleep(1.5)
+    sleep(0.2)
     os.system("clear")
 
 
@@ -122,7 +132,7 @@ def assign_cards():
         i.Cposition = "player4"
     print(Fore.LIGHTYELLOW_EX + "[Caution] Assigning cards...Done")
     print(Style.RESET_ALL)
-    sleep(0.5)
+    sleep(0.2)
     os.system("clear")
 
 
@@ -135,147 +145,201 @@ def sort_cards():
 
 
 def display_cards(player):
-    HandDeck.clear()
+    global HandDeck1
+    global HandDeck2
+    global HandDeck3
+    global HandDeck4
     if player == 1:
+        HandDeck1 = []
         for i in cards_player1:
             if i.Cproperty != "word":
-                HandDeck.append(str(i.Ctype + str(i.Cvalue)))
+                HandDeck1.append(str(i.Ctype + str(i.Cvalue)))
             elif i.Cproperty == "word":
-                HandDeck.append(str(i.Ctype))
-        print(Fore.LIGHTGREEN_EX + "HAND DECK OF PLAYER 1: " + str(HandDeck))
+                HandDeck1.append(str(i.Ctype))
+        print(Fore.LIGHTGREEN_EX + "HAND DECK OF PLAYER 1: " + str(HandDeck1))
         print(Style.RESET_ALL)
-        sleep(0.5)
+        sleep(0.2)
         os.system("clear")
     if player == 2:
+        HandDeck2 = []
         for i in cards_player2:
             if i.Cproperty != "word":
-                HandDeck.append(str(i.Ctype + str(i.Cvalue)))
+                HandDeck2.append(str(i.Ctype + str(i.Cvalue)))
             elif i.Cproperty == "word":
-                HandDeck.append(str(i.Ctype))
-        print(Fore.LIGHTGREEN_EX + "HAND DECK OF PLAYER 2: " + str(HandDeck))
+                HandDeck2.append(str(i.Ctype))
+        print(Fore.LIGHTGREEN_EX + "HAND DECK OF PLAYER 2: " + str(HandDeck2))
         print(Style.RESET_ALL)
-        sleep(0.5)
+        sleep(0.2)
         os.system("clear")
     if player == 3:
+        HandDeck3 = []
         for i in cards_player3:
             if i.Cproperty != "word":
-                HandDeck.append(str(i.Ctype + str(i.Cvalue)))
+                HandDeck3.append(str(i.Ctype + str(i.Cvalue)))
             elif i.Cproperty == "word":
-                HandDeck.append(str(i.Ctype))
-        print(Fore.LIGHTGREEN_EX + "HAND DECK OF PLAYER 3: " + str(HandDeck))
+                HandDeck3.append(str(i.Ctype))
+        print(Fore.LIGHTGREEN_EX + "HAND DECK OF PLAYER 3: " + str(HandDeck3))
         print(Style.RESET_ALL)
-        sleep(0.5)
+        sleep(0.2)
         os.system("clear")
     if player == 4:
+        HandDeck4 = []
         for i in cards_player4:
             if i.Cproperty != "word":
-                HandDeck.append(str(i.Ctype + str(i.Cvalue)))
+                HandDeck4.append(str(i.Ctype + str(i.Cvalue)))
             elif i.Cproperty == "word":
-                HandDeck.append(str(i.Ctype))
-        print(Fore.LIGHTGREEN_EX + "HAND DECK OF PLAYER 4: " + str(HandDeck))
+                HandDeck4.append(str(i.Ctype))
+        print(Fore.LIGHTGREEN_EX + "HAND DECK OF PLAYER 4: " + str(HandDeck4))
         print(Style.RESET_ALL)
-        sleep(0.5)
+        sleep(0.2)
         os.system("clear")
+
+
+def GetCard(player):
+    if cards_mountain:
+        NewCard = cards_mountain.pop()
+        if player == 1:
+            cards_player1.append(NewCard)
+            if NewCard.Cproperty != "word":
+                print(Fore.LIGHTGREEN_EX + "Your new card is: " + str(NewCard.Ctype + str(NewCard.Cvalue)))
+            elif NewCard.Cproperty == "word":
+                print(Fore.LIGHTGREEN_EX + "Your new card is: " + str(NewCard.Ctype))
+        if player == 2:
+            cards_player2.append(NewCard)
+            if NewCard.Cproperty != "word":
+                print(Fore.LIGHTGREEN_EX + "Your new card is: " + str(NewCard.Ctype + str(NewCard.Cvalue)))
+            elif NewCard.Cproperty == "word":
+                print(Fore.LIGHTGREEN_EX + "Your new card is: " + str(NewCard.Ctype))
+        if player == 3:
+            cards_player3.append(NewCard)
+            if NewCard.Cproperty != "word":
+                print(Fore.LIGHTGREEN_EX + "Your new card is: " + str(NewCard.Ctype + str(NewCard.Cvalue)))
+            elif NewCard.Cproperty == "word":
+                print(Fore.LIGHTGREEN_EX + "Your new card is: " + str(NewCard.Ctype))
+        if player == 4:
+            cards_player4.append(NewCard)
+            if NewCard.Cproperty != "word":
+                print(Fore.LIGHTGREEN_EX + "Your new card is: " + str(NewCard.Ctype + str(NewCard.Cvalue)))
+            elif NewCard.Cproperty == "word":
+                print(Fore.LIGHTGREEN_EX + "Your new card is: " + str(NewCard.Ctype))
+        sort_cards()
 
 
 def discard(player):
     if player == 1:
-        flag = 0
         display_cards(1)
-        ToBeDiscard = input("which card to discard? (cards in list):")
-        for i in cards_player1:
-            if (i.Ctype + str(i.Cvalue)) == ToBeDiscard:
-                cards_player1.remove(i)
-                cards_player1_discard.append(i)
-                display_cards(1)
-                flag = 1
-                break
-            elif ToBeDiscard == "white" or ToBeDiscard == "rich" or ToBeDiscard == "middle" or ToBeDiscard == "east" or ToBeDiscard == "south" or ToBeDiscard == "west" or ToBeDiscard == "north":
-                if i.Ctype == ToBeDiscard:
-                    cards_player1.remove(i)
-                    cards_player1_discard.append(i)
-                    display_cards(1)
-                    flag = 1
-                    break
-            elif flag == 0:
-                print("[Error] Invalid card")
-                sleep(0.5)
-                os.system("clear")
-                discard(1)
+        trash = str(input("Choose a card to discard:"))
+        if trash in HandDeck1:
+            cards_player1_discard.append(cards_player1.pop(HandDeck1.index(trash)))
+            LastP = 1
+        else:
+            print(Fore.LIGHTRED_EX + "Error: card not found")
+            print(Style.RESET_ALL)
+            discard(1)
     if player == 2:
-        flag = 0
         display_cards(2)
-        ToBeDiscard = input("which card to discard? (cards in list):")
-        for i in cards_player2:
-            if (i.Ctype + str(i.Cvalue)) == ToBeDiscard:
-                cards_player2.remove(i)
-                cards_player2_discard.append(i)
-                display_cards(2)
-                flag = 1
-                break
-            elif ToBeDiscard == "white" or ToBeDiscard == "rich" or ToBeDiscard == "middle" or ToBeDiscard == "east" or ToBeDiscard == "south" or ToBeDiscard == "west" or ToBeDiscard == "north":
-                if i.Ctype == ToBeDiscard:
-                    cards_player2.remove(i)
-                    cards_player2_discard.append(i)
-                    display_cards(2)
-                    flag = 1
-                    break
-            elif flag == 0:
-                print("[Error] Invalid card")
-                sleep(0.5)
-                os.system("clear")
-                discard(2)
+        trash = str(input("Choose a card to discard:"))
+        print(HandDeck2)
+        if trash in HandDeck2:
+            cards_player2_discard.append(cards_player2.pop(HandDeck2.index(trash)))
+            LastP = 2
+        else:
+            print(Fore.LIGHTRED_EX + "Error: card not found")
+            print(Style.RESET_ALL)
+            discard(2)
     if player == 3:
-        flag = 0
         display_cards(3)
-        ToBeDiscard = input("which card to discard? (cards in list):")
-        for i in cards_player3:
-            if (i.Ctype + str(i.Cvalue)) == ToBeDiscard:
-                cards_player3.remove(i)
-                cards_player3_discard.append(i)
-                display_cards(3)
-                flag = 1
-                break
-            elif ToBeDiscard == "white" or ToBeDiscard == "rich" or ToBeDiscard == "middle" or ToBeDiscard == "east" or ToBeDiscard == "south" or ToBeDiscard == "west" or ToBeDiscard == "north":
-                if i.Ctype == ToBeDiscard:
-                    cards_player3.remove(i)
-                    cards_player3_discard.append(i)
-                    display_cards(3)
-                    flag = 1
-                    break
-            elif flag == 0:
-                print("[Error] Invalid card")
-                sleep(0.5)
-                os.system("clear")
-                discard(3)
+        trash = str(input("Choose a card to discard:"))
+        print(HandDeck3)
+        if trash in HandDeck3:
+            cards_player3_discard.append(cards_player3.pop(HandDeck3.index(trash)))
+            LastP = 3
+        else:
+            print(Fore.LIGHTRED_EX + "Error: card not found")
+            print(Style.RESET_ALL)
+            discard(3)
     if player == 4:
-        flag = 0
         display_cards(4)
-        ToBeDiscard = input("which card to discard? (cards in list):")
-        for i in cards_player4:
-            if (i.Ctype + str(i.Cvalue)) == ToBeDiscard:
-                cards_player4.remove(i)
-                cards_player4_discard.append(i)
-                display_cards(4)
-                flag = 1
-                break
-            elif ToBeDiscard == "white" or ToBeDiscard == "rich" or ToBeDiscard == "middle" or ToBeDiscard == "east" or ToBeDiscard == "south" or ToBeDiscard == "west" or ToBeDiscard == "north":
-                if i.Ctype == ToBeDiscard:
-                    cards_player4.remove(i)
-                    cards_player4_discard.append(i)
-                    display_cards(4)
-                    flag = 1
-                    break
-            elif flag == 0:
-                print("[Error] Invalid card")
-                sleep(0.5)
-                os.system("clear")
-                discard(4)
+        trash = str(input("Choose a card to discard:"))
+        print(HandDeck4)
+        if trash in HandDeck4:
+            cards_player4_discard.append(cards_player4.pop(HandDeck4.index(trash)))
+            LastP = 4
+            # I love this move, since HandDeck and cards_player are synchronized,
+            # use HandDeck to find the index of the card and then pop it from cards_player.
+            # no copilot used, figure it out myself *proud_face*
+        else:
+            print(Fore.LIGHTRED_EX + "Error: card not found")
+            print(Style.RESET_ALL)
+            discard(4)
 
 
-move_shuffle()
-assign_cards()
-sort_cards()
-while 1:
-    discard(int(input("select a player to discard a card:")))
-    os.system("clear")
+def CHK_pon():
+    global CanPon1, CanPon2, CanPon3, CanPon4
+    # Gonna initialize the list every time so the list won't repeat itself
+    CanPon1 = []
+    CanPon2 = []
+    CanPon3 = []
+    CanPon4 = []
+    for i in HandDeck1:
+        if HandDeck1.count(i) == 2:
+            CanPon1.append(i)
+        if HandDeck2.count(i) == 2:
+            CanPon2.append(i)
+        if HandDeck3.count(i) == 2:
+            CanPon3.append(i)
+        if HandDeck4.count(i) == 2:
+            CanPon4.append(i)
+        CanPon1 = list(set(CanPon1))
+        CanPon2 = list(set(CanPon2))
+        CanPon3 = list(set(CanPon3))
+        CanPon4 = list(set(CanPon4))
+
+
+def Want_Pon(player):
+    global LastP
+    if player == 1 and LastP != 1 and CanPon1:
+        print(Fore.LIGHTYELLOW_EX + str(CanPon1) + "/skip")
+        decision = str(input())
+        temp = (i for i, n in enumerate(HandDeck1) if n == decision)
+        if decision in CanPon1:
+            cards_player1_discard.append(cards_player1.pop(temp))
+            cards_player1_discard.append(cards_player1.pop(temp))
+            LastP = 1
+        elif decision == "skip":
+            pass
+    CHK_pon()
+    if player == 2 and LastP != 2 and CanPon2:
+        print(Fore.LIGHTYELLOW_EX + str(CanPon2) + "/skip")
+        decision = str(input())
+        temp = (i for i, n in enumerate(HandDeck2) if n == decision)
+        if decision in CanPon2:
+            cards_player2_discard.append(cards_player2.pop(temp))
+            cards_player2_discard.append(cards_player2.pop(temp))
+            LastP = 2
+        elif decision == "skip":
+            pass
+    CHK_pon()
+    if player == 3 and LastP != 3 and CanPon3:
+        print(Fore.LIGHTYELLOW_EX + str(CanPon3) + "/skip")
+        decision = str(input())
+        temp = (i for i, n in enumerate(HandDeck3) if n == decision)
+        if decision in CanPon3:
+            cards_player3_discard.append(cards_player3.pop(temp))
+            cards_player3_discard.append(cards_player3.pop(temp))
+            LastP = 3
+        elif decision == "skip":
+            pass
+    CHK_pon()
+    if player == 4 and LastP != 4 and CanPon4:
+        print(Fore.LIGHTYELLOW_EX + str(CanPon4) + "/skip")
+        decision = str(input())
+        temp = (i for i, n in enumerate(HandDeck4) if n == decision)
+        if decision in CanPon4:
+            cards_player4_discard.append(cards_player4.pop(temp))
+            cards_player4_discard.append(cards_player4.pop(temp))
+            LastP = 4
+        elif decision == "skip":
+            pass
+    CHK_pon()
+
