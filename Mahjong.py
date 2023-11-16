@@ -35,6 +35,10 @@ cards_player1_discard = []
 cards_player2_discard = []
 cards_player3_discard = []
 cards_player4_discard = []
+cards_player1_Pon = []
+cards_player2_Pon = []
+cards_player3_Pon = []
+cards_player4_Pon = []
 
 CanPon1 = []
 CanPon2 = []
@@ -226,12 +230,15 @@ def GetCard(player):
 
 
 def discard(player):
+    global LastP
+    global LastCard
     if player == 1:
         display_cards(1)
         trash = str(input("Choose a card to discard:"))
         if trash in HandDeck1:
             cards_player1_discard.append(cards_player1.pop(HandDeck1.index(trash)))
             LastP = 1
+            LastCard = trash
         else:
             print(Fore.LIGHTRED_EX + "Error: card not found")
             print(Style.RESET_ALL)
@@ -239,10 +246,10 @@ def discard(player):
     if player == 2:
         display_cards(2)
         trash = str(input("Choose a card to discard:"))
-        print(HandDeck2)
         if trash in HandDeck2:
             cards_player2_discard.append(cards_player2.pop(HandDeck2.index(trash)))
             LastP = 2
+            LastCard = trash
         else:
             print(Fore.LIGHTRED_EX + "Error: card not found")
             print(Style.RESET_ALL)
@@ -254,6 +261,7 @@ def discard(player):
         if trash in HandDeck3:
             cards_player3_discard.append(cards_player3.pop(HandDeck3.index(trash)))
             LastP = 3
+            LastCard = trash
         else:
             print(Fore.LIGHTRED_EX + "Error: card not found")
             print(Style.RESET_ALL)
@@ -265,6 +273,7 @@ def discard(player):
         if trash in HandDeck4:
             cards_player4_discard.append(cards_player4.pop(HandDeck4.index(trash)))
             LastP = 4
+            LastCard = trash
             # I love this move, since HandDeck and cards_player are synchronized,
             # use HandDeck to find the index of the card and then pop it from cards_player.
             # no copilot used, figure it out myself *proud_face*
@@ -281,65 +290,92 @@ def CHK_pon():
     CanPon2 = []
     CanPon3 = []
     CanPon4 = []
-    for i in HandDeck1:
-        if HandDeck1.count(i) == 2:
-            CanPon1.append(i)
-        if HandDeck2.count(i) == 2:
-            CanPon2.append(i)
-        if HandDeck3.count(i) == 2:
-            CanPon3.append(i)
-        if HandDeck4.count(i) == 2:
-            CanPon4.append(i)
+    for a in HandDeck1:
+        if HandDeck1.count(a) == 2:
+            CanPon1.append(str(a))
+    for b in HandDeck2:
+        if HandDeck2.count(b) == 2:
+            CanPon2.append(str(b))
+    for c in HandDeck3:
+        if HandDeck3.count(c) == 2:
+            CanPon3.append(str(c))
+    for d in HandDeck4:
+        if HandDeck4.count(d) == 2:
+            CanPon4.append(str(d))
         CanPon1 = list(set(CanPon1))
         CanPon2 = list(set(CanPon2))
         CanPon3 = list(set(CanPon3))
         CanPon4 = list(set(CanPon4))
+    print(CanPon1)
+    print(CanPon2)
+    print(CanPon3)
+    print(CanPon4)
 
 
-def Want_Pon(player):
-    global LastP
-    if player == 1 and LastP != 1 and CanPon1:
-        print(Fore.LIGHTYELLOW_EX + str(CanPon1) + "/skip")
-        decision = str(input())
-        temp = (i for i, n in enumerate(HandDeck1) if n == decision)
-        if decision in CanPon1:
-            cards_player1_discard.append(cards_player1.pop(temp))
-            cards_player1_discard.append(cards_player1.pop(temp))
-            LastP = 1
-        elif decision == "skip":
+def want_Pon():
+    global decide
+    if CanPon1 != [] and LastP != 1 and LastP != 0 and LastCard in CanPon1:
+        decide = str(input("P1,which do you want to Pon " + LastCard + " ? (or 'skip') "))
+        if decide != "skip" and (decide in CanPon1):
+            cards_player1_Pon.append(cards_player1.pop(HandDeck1.index(decide)))
+            cards_player1_Pon.append(cards_player1_discard.pop())
+        elif decide == "skip":
             pass
-    CHK_pon()
-    if player == 2 and LastP != 2 and CanPon2:
-        print(Fore.LIGHTYELLOW_EX + str(CanPon2) + "/skip")
-        decision = str(input())
-        temp = (i for i, n in enumerate(HandDeck2) if n == decision)
-        if decision in CanPon2:
-            cards_player2_discard.append(cards_player2.pop(temp))
-            cards_player2_discard.append(cards_player2.pop(temp))
-            LastP = 2
-        elif decision == "skip":
+    if CanPon2 != [] and LastP != 2 and LastP != 0 and LastCard in CanPon2:
+        decide = str(input("P2,which do you want to Pon " + LastCard + " ? (or 'skip') "))
+        if decide != "skip" and (decide in CanPon2):
+            cards_player2_Pon.append(cards_player2.pop(HandDeck2.index(decide)))
+            cards_player2_Pon.append(cards_player2_discard.pop())
+        elif decide == "skip":
             pass
-    CHK_pon()
-    if player == 3 and LastP != 3 and CanPon3:
-        print(Fore.LIGHTYELLOW_EX + str(CanPon3) + "/skip")
-        decision = str(input())
-        temp = (i for i, n in enumerate(HandDeck3) if n == decision)
-        if decision in CanPon3:
-            cards_player3_discard.append(cards_player3.pop(temp))
-            cards_player3_discard.append(cards_player3.pop(temp))
-            LastP = 3
-        elif decision == "skip":
+    if CanPon3 != [] and LastP != 3 and LastP != 0 and LastCard in CanPon3:
+        decide = str(input("P3,which do you want to Pon " + LastCard + " ? (or 'skip') "))
+        if decide != "skip" and (decide in CanPon3):
+            cards_player3_Pon.append(cards_player3.pop(HandDeck3.index(decide)))
+            cards_player3_Pon.append(cards_player3_discard.pop())
+        elif decide == "skip":
             pass
-    CHK_pon()
-    if player == 4 and LastP != 4 and CanPon4:
-        print(Fore.LIGHTYELLOW_EX + str(CanPon4) + "/skip")
-        decision = str(input())
-        temp = (i for i, n in enumerate(HandDeck4) if n == decision)
-        if decision in CanPon4:
-            cards_player4_discard.append(cards_player4.pop(temp))
-            cards_player4_discard.append(cards_player4.pop(temp))
-            LastP = 4
-        elif decision == "skip":
+    if CanPon4 != [] and LastP != 4 and LastP != 0 and LastCard in CanPon4:
+        decide = str(input("P4,which do you want to Pon " + LastCard + " ? (or 'skip') "))
+        if decide != "skip" and (decide in CanPon4):
+            cards_player4_Pon.append(cards_player4.pop(HandDeck4.index(decide)))
+            cards_player4_Pon.append(cards_player4_discard.pop())
+        elif decide == "skip":
             pass
-    CHK_pon()
 
+
+# functions list:
+# 1. move_shuffle()
+# 2. assign_winds()
+# 3. assign_cards()
+# 4. sort_cards()
+# 5. display_cards(player)
+# 6. GetCard(player)
+# 7. discard(player)
+# 8. CHK_pon()
+# 9. Want_Pon(player)
+
+move_shuffle()
+assign_winds()
+assign_cards()
+sort_cards()
+display_cards(1)
+display_cards(2)
+display_cards(3)
+display_cards(4)
+GetCard(1)
+discard(1)
+CHK_pon()
+want_Pon()
+GetCard(2)
+discard(2)
+CHK_pon()
+want_Pon()
+GetCard(3)
+discard(3)
+CHK_pon()
+want_Pon()
+GetCard(4)
+discard(4)
+CHK_pon()
+want_Pon()
