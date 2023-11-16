@@ -263,7 +263,6 @@ def discard(player):
     if player == 3:
         display_cards(3)
         trash = str(input("Choose a card to discard:"))
-        print(HandDeck3)
         if trash in HandDeck3:
             cards_player3_discard.append(cards_player3.pop(HandDeck3.index(trash)))
             LastP = 3
@@ -277,7 +276,6 @@ def discard(player):
     if player == 4:
         display_cards(4)
         trash = str(input("Choose a card to discard:"))
-        print(HandDeck4)
         if trash in HandDeck4:
             cards_player4_discard.append(cards_player4.pop(HandDeck4.index(trash)))
             LastP = 4
@@ -316,10 +314,6 @@ def CHK_pon():
         CanPon2 = list(set(CanPon2))
         CanPon3 = list(set(CanPon3))
         CanPon4 = list(set(CanPon4))
-    print(CanPon1)
-    print(CanPon2)
-    print(CanPon3)
-    print(CanPon4)
 
 
 def want_Pon():
