@@ -39,15 +39,28 @@ cards_player1_Pon = []
 cards_player2_Pon = []
 cards_player3_Pon = []
 cards_player4_Pon = []
+cards_player1_Kan = []
+cards_player2_Kan = []
+cards_player3_Kan = []
+cards_player4_Kan = []
 
 CanPon1 = []
 CanPon2 = []
 CanPon3 = []
 CanPon4 = []
 
+CanKan1 = []
+CanKan2 = []
+CanKan3 = []
+CanKan4 = []
+
+CanKan1N = []
+CanKan2N = []
+CanKan3N = []
+CanKan4N = []
+
 LastP = 0
 NextP = 1
-
 
 def create_cards():
     print(Fore.LIGHTYELLOW_EX + "[Caution] Creating cards...(1/2)")
@@ -148,6 +161,36 @@ def sort_cards():
     cards_player3.sort(key=lambda x: (x.Csort, x.Cvalue))
     cards_player4.sort(key=lambda x: (x.Csort, x.Cvalue))
 
+
+def syncHandDecks():
+    global HandDeck1
+    global HandDeck2
+    global HandDeck3
+    global HandDeck4
+    HandDeck1 = []
+    HandDeck2 = []
+    HandDeck3 = []
+    HandDeck4 = []
+    for i in cards_player1:
+        if i.Cproperty != "word":
+            HandDeck1.append(str(i.Ctype + str(i.Cvalue)))
+        elif i.Cproperty == "word":
+            HandDeck1.append(str(i.Ctype))
+    for i in cards_player2:
+        if i.Cproperty != "word":
+            HandDeck2.append(str(i.Ctype + str(i.Cvalue)))
+        elif i.Cproperty == "word":
+            HandDeck2.append(str(i.Ctype))
+    for i in cards_player3:
+        if i.Cproperty != "word":
+            HandDeck3.append(str(i.Ctype + str(i.Cvalue)))
+        elif i.Cproperty == "word":
+            HandDeck3.append(str(i.Ctype))
+    for i in cards_player4:
+        if i.Cproperty != "word":
+            HandDeck4.append(str(i.Ctype + str(i.Cvalue)))
+        elif i.Cproperty == "word":
+            HandDeck4.append(str(i.Ctype))
 
 def display_cards(player):
     global HandDeck1
@@ -317,13 +360,14 @@ def CHK_pon():
 
 
 def want_Pon():
-    global decide
+    global decidePon
     global NextP
     if CanPon1 != [] and LastP != 1 and LastP != 0 and LastCard in CanPon1:
-        decide = str(input("P1,which do you want to Pon " + LastCard + " ? (or 'skip') "))
-        if decide != "skip" and (decide in CanPon1):
-            cards_player1_Pon.append(cards_player1.pop(HandDeck1.index(decide)))
-            cards_player1_Pon.append(cards_player1_discard.pop())
+        decidePon = str(input("P1,which do you want to Pon " + LastCard + " ? (or 'skip') "))
+        if decidePon != "skip" and (decidePon in CanPon1):
+            for i in range(0, 2):
+                syncHandDecks()
+                cards_player1_Pon.append(cards_player1.pop(HandDeck1.index(decidePon)))
             if LastP == 2:
                 cards_player3_Pon.append(cards_player2_discard.pop())
             if LastP == 3:
@@ -332,13 +376,19 @@ def want_Pon():
                 cards_player3_Pon.append(cards_player4_discard.pop())
             discard(1)
             NextP = 2
-        elif decide == "skip":
+        elif decidePon == "skip":
             pass
+        else:
+            print(Fore.LIGHTRED_EX + "Error: card not found")
+            print(Style.RESET_ALL)
+            want_Pon()
+
     if CanPon2 != [] and LastP != 2 and LastP != 0 and LastCard in CanPon2:
-        decide = str(input("P2,which do you want to Pon " + LastCard + " ? (or 'skip') "))
-        if decide != "skip" and (decide in CanPon2):
-            cards_player2_Pon.append(cards_player2.pop(HandDeck2.index(decide)))
-            cards_player2_Pon.append(cards_player2_discard.pop())
+        decidePon = str(input("P2,which do you want to Pon " + LastCard + " ? (or 'skip') "))
+        if decidePon != "skip" and (decidePon in CanPon2):
+            for i in range(0, 2):
+                syncHandDecks()
+                cards_player2_Pon.append(cards_player2.pop(HandDeck2.index(decidePon)))
             if LastP == 1:
                 cards_player3_Pon.append(cards_player1_discard.pop())
             if LastP == 3:
@@ -347,14 +397,19 @@ def want_Pon():
                 cards_player3_Pon.append(cards_player4_discard.pop())
             discard(2)
             NextP = 3
-        elif decide == "skip":
+        elif decidePon == "skip":
             pass
+        else:
+            print(Fore.LIGHTRED_EX + "Error: card not found")
+            print(Style.RESET_ALL)
+            want_Pon()
 
     if CanPon3 != [] and LastP != 3 and LastP != 0 and LastCard in CanPon3:
-        decide = str(input("P3,which do you want to Pon " + LastCard + " ? (or 'skip') "))
-        if decide != "skip" and (decide in CanPon3):
-            cards_player3_Pon.append(cards_player3.pop(HandDeck3.index(decide)))
-            cards_player3_Pon.append(cards_player3.pop(HandDeck3.index(decide)))
+        decidePon = str(input("P3,which do you want to Pon " + LastCard + " ? (or 'skip') "))
+        if decidePon != "skip" and (decidePon in CanPon3):
+            for i in range(0, 2):
+                syncHandDecks()
+                cards_player3_Pon.append(cards_player3.pop(HandDeck3.index(decidePon)))
             if LastP == 1:
                 cards_player3_Pon.append(cards_player1_discard.pop())
             if LastP == 2:
@@ -363,13 +418,19 @@ def want_Pon():
                 cards_player3_Pon.append(cards_player4_discard.pop())
             discard(3)
             NextP = 4
-        elif decide == "skip":
+        elif decidePon == "skip":
             pass
+        else:
+            print(Fore.LIGHTRED_EX + "Error: card not found")
+            print(Style.RESET_ALL)
+            want_Pon()
+
     if CanPon4 != [] and LastP != 4 and LastP != 0 and LastCard in CanPon4:
-        decide = str(input("P4,which do you want to Pon " + LastCard + " ? (or 'skip') "))
-        if decide != "skip" and (decide in CanPon4):
-            cards_player4_Pon.append(cards_player4.pop(HandDeck4.index(decide)))
-            cards_player4_Pon.append(cards_player4_discard.pop())
+        decidePon = str(input("P4,which do you want to Pon " + LastCard + " ? (or 'skip') "))
+        if decidePon != "skip" and (decidePon in CanPon4):
+            for i in range(0, 2):
+                syncHandDecks()
+                cards_player3_Pon.append(cards_player3.pop(HandDeck3.index(decidePon)))
             if LastP == 1:
                 cards_player3_Pon.append(cards_player1_discard.pop())
             if LastP == 2:
@@ -378,8 +439,225 @@ def want_Pon():
                 cards_player3_Pon.append(cards_player3_discard.pop())
             discard(4)
             NextP = 1
-        elif decide == "skip":
+        elif decidePon == "skip":
             pass
+        else:
+            print(Fore.LIGHTRED_EX + "Error: card not found")
+            print(Style.RESET_ALL)
+            want_Pon()
+
+
+def CHK_kan():
+    global CanKan1, CanKan2, CanKan3, CanKan4, CanKan1N, CanKan2N, CanKan3N, CanKan4N
+    CanKan1 = []
+    CanKan2 = []
+    CanKan3 = []
+    CanKan4 = []
+    for a in HandDeck1:
+        if HandDeck1.count(a) == 3:
+            CanKan1.append(str(a))
+        if HandDeck1.count(a) == 4:
+            CanKan1N.append(str(a))
+    for b in HandDeck2:
+        if HandDeck2.count(b) == 3:
+            CanKan2.append(str(b))
+        if HandDeck2.count(b) == 4:
+            CanKan2N.append(str(b))
+    for c in HandDeck3:
+        if HandDeck3.count(c) == 3:
+            CanKan3.append(str(c))
+        if HandDeck3.count(c) == 4:
+            CanKan3N.append(str(c))
+    for d in HandDeck4:
+        if HandDeck4.count(d) == 3:
+            CanKan4.append(str(d))
+        if HandDeck4.count(d) == 4:
+            CanKan4N.append(str(d))
+        CanKan1 = list(set(CanKan1))
+        CanKan2 = list(set(CanKan2))
+        CanKan3 = list(set(CanKan3))
+        CanKan4 = list(set(CanKan4))
+        CanKan1N = list(set(CanKan1N))
+        CanKan2N = list(set(CanKan2N))
+        CanKan3N = list(set(CanKan3N))
+        CanKan4N = list(set(CanKan4N))
+
+
+def want_Kan():
+    global decideKan
+    global NextP
+    if CanKan1 != [] and LastP != 1 and ((LastCard in CanKan1) or CanKan1N != []):
+        if LastCard in CanKan1:
+            decideKan = str(input("P1,which do you want to Kan " + LastCard + " ? (or 'skip') "))
+            if decideKan != "skip" and (decideKan in CanKan1):
+                syncHandDecks()
+                cards_player1_Kan.append(cards_player1.pop(HandDeck1.index(decideKan)))
+                cards_player1_Kan.append(cards_player1.pop(HandDeck1.index(decideKan)))
+                cards_player1_Kan.append(cards_player1.pop(HandDeck1.index(decideKan)))
+                cards_player1_Kan.append(cards_player1_discard.pop())
+                if LastP == 2:
+                    cards_player1_Kan.append(cards_player2_discard.pop())
+                if LastP == 3:
+                    cards_player1_Kan.append(cards_player3_discard.pop())
+                if LastP == 4:
+                    cards_player1_Kan.append(cards_player4_discard.pop())
+                GetCard(1)
+                discard(1)
+                NextP = 2
+            elif decideKan == "skip":
+                pass
+            else:
+                print(Fore.LIGHTRED_EX + "Error: card not found")
+                print(Style.RESET_ALL)
+                want_Kan()
+
+        elif CanKan1N:
+            decideKan = str(input("P1,which do you want to Kan " + str(CanKan1N) + " ? (or 'skip') "))
+            if decideKan != "skip" and (decideKan in CanKan1N):
+                syncHandDecks()
+                cards_player1_Kan.append(cards_player1.pop(HandDeck1.index(decideKan)))
+                cards_player1_Kan.append(cards_player1.pop(HandDeck1.index(decideKan)))
+                cards_player1_Kan.append(cards_player1.pop(HandDeck1.index(decideKan)))
+                cards_player1_Kan.append(cards_player1.pop(HandDeck1.index(decideKan)))
+                GetCard(1)
+                discard(1)
+                NextP = 2
+            elif decideKan == "skip":
+                pass
+            else:
+                print(Fore.LIGHTRED_EX + "Error: card not found")
+                print(Style.RESET_ALL)
+                want_Kan()
+
+    if CanKan2 != [] and LastP != 2 and ((LastCard in CanKan2) or CanKan2N != []):
+        if LastCard in CanKan2:
+            decideKan = str(input("P2,which do you want to Kan " + LastCard + " ? (or 'skip') "))
+            if decideKan != "skip" and (decideKan in CanKan2):
+                syncHandDecks()
+                cards_player2_Kan.append(cards_player2.pop(HandDeck2.index(decideKan)))
+                cards_player2_Kan.append(cards_player2.pop(HandDeck2.index(decideKan)))
+                cards_player2_Kan.append(cards_player2.pop(HandDeck2.index(decideKan)))
+                cards_player2_Kan.append(cards_player2_discard.pop())
+                if LastP == 1:
+                    cards_player2_Kan.append(cards_player1_discard.pop())
+                if LastP == 3:
+                    cards_player2_Kan.append(cards_player3_discard.pop())
+                if LastP == 4:
+                    cards_player2_Kan.append(cards_player4_discard.pop())
+                GetCard(2)
+                discard(2)
+                NextP = 3
+            elif decideKan == "skip":
+                pass
+            else:
+                print(Fore.LIGHTRED_EX + "Error: card not found")
+                print(Style.RESET_ALL)
+                want_Kan()
+
+        elif CanKan2N:
+            decideKan = str(input("P2,which do you want to Kan " + str(CanKan2N) + " ? (or 'skip') "))
+            if decideKan != "skip" and (decideKan in CanKan2N):
+                syncHandDecks()
+                cards_player2_Kan.append(cards_player2.pop(HandDeck2.index(decideKan)))
+                cards_player2_Kan.append(cards_player2.pop(HandDeck2.index(decideKan)))
+                cards_player2_Kan.append(cards_player2.pop(HandDeck2.index(decideKan)))
+                cards_player2_Kan.append(cards_player2.pop(HandDeck2.index(decideKan)))
+                GetCard(2)
+                discard(2)
+                NextP = 3
+            elif decideKan == "skip":
+                pass
+            else:
+                print(Fore.LIGHTRED_EX + "Error: card not found")
+                print(Style.RESET_ALL)
+                want_Kan()
+
+    if CanKan3 != [] and LastP != 3 and ((LastCard in CanKan3) or CanKan3N != []):
+        if LastCard in CanKan3:
+            decideKan = str(input("P3,which do you want to Kan " + LastCard + " ? (or 'skip') "))
+            if decideKan != "skip" and (decideKan in CanKan3):
+                syncHandDecks()
+                cards_player3_Kan.append(cards_player3.pop(HandDeck3.index(decideKan)))
+                cards_player3_Kan.append(cards_player3.pop(HandDeck3.index(decideKan)))
+                cards_player3_Kan.append(cards_player3.pop(HandDeck3.index(decideKan)))
+                cards_player3_Kan.append(cards_player3_discard.pop())
+                if LastP == 1:
+                    cards_player3_Kan.append(cards_player1_discard.pop())
+                if LastP == 2:
+                    cards_player3_Kan.append(cards_player2_discard.pop())
+                if LastP == 4:
+                    cards_player3_Kan.append(cards_player4_discard.pop())
+                GetCard(3)
+                discard(3)
+                NextP = 4
+            elif decideKan == "skip":
+                pass
+            else:
+                print(Fore.LIGHTRED_EX + "Error: card not found")
+                print(Style.RESET_ALL)
+                want_Kan()
+
+        elif CanKan3N:
+            decideKan = str(input("P3,which do you want to Kan " + str(CanKan3N) + " ? (or 'skip') "))
+            if decideKan != "skip" and (decideKan in CanKan3N):
+                syncHandDecks()
+                cards_player3_Kan.append(cards_player3.pop(HandDeck3.index(decideKan)))
+                cards_player3_Kan.append(cards_player3.pop(HandDeck3.index(decideKan)))
+                cards_player3_Kan.append(cards_player3.pop(HandDeck3.index(decideKan)))
+                cards_player3_Kan.append(cards_player3.pop(HandDeck3.index(decideKan)))
+                GetCard(3)
+                discard(3)
+                NextP = 4
+            elif decideKan == "skip":
+                pass
+            else:
+                print(Fore.LIGHTRED_EX + "Error: card not found")
+                print(Style.RESET_ALL)
+                want_Kan()
+
+    if CanKan4 != [] and LastP != 4 and ((LastCard in CanKan4) or CanKan4N != []):
+        if LastCard in CanKan4:
+            decideKan = str(input("P4,which do you want to Kan " + LastCard + " ? (or 'skip') "))
+            if decideKan != "skip" and (decideKan in CanKan4):
+                syncHandDecks()
+                cards_player4_Kan.append(cards_player4.pop(HandDeck4.index(decideKan)))
+                cards_player4_Kan.append(cards_player4.pop(HandDeck4.index(decideKan)))
+                cards_player4_Kan.append(cards_player4.pop(HandDeck4.index(decideKan)))
+                cards_player4_Kan.append(cards_player4_discard.pop())
+                if LastP == 1:
+                    cards_player4_Kan.append(cards_player1_discard.pop())
+                if LastP == 2:
+                    cards_player4_Kan.append(cards_player2_discard.pop())
+                if LastP == 3:
+                    cards_player4_Kan.append(cards_player3_discard.pop())
+                GetCard(4)
+                discard(4)
+                NextP = 1
+            elif decideKan == "skip":
+                pass
+            else:
+                print(Fore.LIGHTRED_EX + "Error: card not found")
+                print(Style.RESET_ALL)
+                want_Kan()
+
+        elif CanKan4N:
+            decideKan = str(input("P4,which do you want to Kan " + str(CanKan4N) + " ? (or 'skip') "))
+            if decideKan != "skip" and (decideKan in CanKan4N):
+                syncHandDecks()
+                cards_player4_Kan.append(cards_player4.pop(HandDeck4.index(decideKan)))
+                cards_player4_Kan.append(cards_player4.pop(HandDeck4.index(decideKan)))
+                cards_player4_Kan.append(cards_player4.pop(HandDeck4.index(decideKan)))
+                cards_player4_Kan.append(cards_player4.pop(HandDeck4.index(decideKan)))
+                GetCard(4)
+                discard(4)
+                NextP = 1
+            elif decideKan == "skip":
+                pass
+            else:
+                print(Fore.LIGHTRED_EX + "Error: card not found")
+                print(Style.RESET_ALL)
+                want_Kan()
+
 
 
 # functions list:
@@ -401,8 +679,18 @@ display_cards(1)
 display_cards(2)
 display_cards(3)
 display_cards(4)
+
 while cards_mountain:
+    syncHandDecks()
     GetCard(NextP)
+    syncHandDecks()
     discard(NextP)
+    syncHandDecks()
+    CHK_kan()
+    syncHandDecks()
+    want_Kan()
+    syncHandDecks()
     CHK_pon()
+    syncHandDecks()
     want_Pon()
+    syncHandDecks()
