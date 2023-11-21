@@ -659,6 +659,137 @@ def want_Kan():
                 want_Kan()
 
 
+def SimpleWinCheck():
+    Rank = []
+    if not cards_mountain:
+        Rank.append(len(cards_player1))
+        Rank.append(len(cards_player2))
+        Rank.append(len(cards_player3))
+        Rank.append(len(cards_player4))
+        Rank.sort()
+        print(Fore.LIGHTGREEN_EX + "The rank is: " + str(Rank))
+        print(Style.RESET_ALL)
+        sleep(0.2)
+        os.system("clear")
+        if Rank[0] == len(cards_player1):
+            print(Fore.LIGHTRED_EX + "Player 1 wins!")
+            print(Style.RESET_ALL)
+            sleep(0.2)
+            os.system("clear")
+        if Rank[0] == len(cards_player2):
+            print(Fore.LIGHTRED_EX + "Player 2 wins!")
+            print(Style.RESET_ALL)
+            sleep(0.2)
+            os.system("clear")
+        if Rank[0] == len(cards_player3):
+            print(Fore.LIGHTRED_EX + "Player 3 wins!")
+            print(Style.RESET_ALL)
+            sleep(0.2)
+            os.system("clear")
+        if Rank[0] == len(cards_player4):
+            print(Fore.LIGHTRED_EX + "Player 4 wins!")
+            print(Style.RESET_ALL)
+            sleep(0.2)
+            os.system("clear")
+        quit()
+    elif cards_mountain:
+        syncHandDecks()
+        if len(set(HandDeck1)) == len(HandDeck1):
+            print(Fore.LIGHTRED_EX + "Player 1 wins!")
+            print(Style.RESET_ALL)
+            sleep(0.2)
+            os.system("clear")
+            quit()
+        if len(set(HandDeck2)) == len(HandDeck2):
+            print(Fore.LIGHTRED_EX + "Player 2 wins!")
+            print(Style.RESET_ALL)
+            sleep(0.2)
+            os.system("clear")
+            quit()
+        if len(set(HandDeck3)) == len(HandDeck3):
+            print(Fore.LIGHTRED_EX + "Player 3 wins!")
+            print(Style.RESET_ALL)
+            sleep(0.2)
+            os.system("clear")
+            quit()
+        if len(set(HandDeck4)) == len(HandDeck4):
+            print(Fore.LIGHTRED_EX + "Player 4 wins!")
+            print(Style.RESET_ALL)
+            sleep(0.2)
+            os.system("clear")
+            quit()
+        if (LastCard in HandDeck1) and (LastP != 1):
+            P1Decide = str(input("P1, do you want to Ron? (Ron/skip)"))
+            if P1Decide == "Ron":
+                print(Fore.LIGHTRED_EX + "Player 1 wins!")
+                print(Fore.LIGHTRED_EX + str(LastP) + " Defeated!")
+                print(Style.RESET_ALL)
+                sleep(0.2)
+                os.system("clear")
+                quit()
+            if P1Decide == "skip":
+                pass
+            else:
+                print(Fore.LIGHTRED_EX + "Error: invalid input")
+                print(Style.RESET_ALL)
+                sleep(0.2)
+                os.system("clear")
+                SimpleWinCheck()
+
+        if (LastCard in HandDeck2) and (LastP != 2):
+            P2Decide = str(input("P2, do you want to Ron? (Ron/skip)"))
+            if P2Decide == "Ron":
+                print(Fore.LIGHTRED_EX + "Player 2 wins!")
+                print(Fore.LIGHTRED_EX + str(LastP) + " Defeated!")
+                print(Style.RESET_ALL)
+                sleep(0.2)
+                os.system("clear")
+                quit()
+            if P2Decide == "skip":
+                pass
+            else:
+                print(Fore.LIGHTRED_EX + "Error: invalid input")
+                print(Style.RESET_ALL)
+                sleep(0.2)
+                os.system("clear")
+                SimpleWinCheck()
+
+        if (LastCard in HandDeck3) and (LastP != 3):
+            P3Decide = str(input("P3, do you want to Ron? (Ron/skip)"))
+            if P3Decide == "Ron":
+                print(Fore.LIGHTRED_EX + "Player 3 wins!")
+                print(Fore.LIGHTRED_EX + str(LastP) + " Defeated!")
+                print(Style.RESET_ALL)
+                sleep(0.2)
+                os.system("clear")
+                quit()
+            if P3Decide == "skip":
+                pass
+            else:
+                print(Fore.LIGHTRED_EX + "Error: invalid input")
+                print(Style.RESET_ALL)
+                sleep(0.2)
+                os.system("clear")
+                SimpleWinCheck()
+
+        if (LastCard in HandDeck4) and (LastP != 4):
+            P4Decide = str(input("P4, do you want to Ron? (Ron/skip)"))
+            if P4Decide == "Ron":
+                print(Fore.LIGHTRED_EX + "Player 4 wins!")
+                print(Fore.LIGHTRED_EX + str(LastP) + " Defeated!")
+                print(Style.RESET_ALL)
+                sleep(0.2)
+                os.system("clear")
+                quit()
+            if P4Decide == "skip":
+                pass
+            else:
+                print(Fore.LIGHTRED_EX + "Error: invalid input")
+                print(Style.RESET_ALL)
+                sleep(0.2)
+                os.system("clear")
+                SimpleWinCheck()
+
 
 # functions list:
 # 1. move_shuffle()
@@ -675,10 +806,6 @@ move_shuffle()
 assign_winds()
 assign_cards()
 sort_cards()
-display_cards(1)
-display_cards(2)
-display_cards(3)
-display_cards(4)
 
 while cards_mountain:
     syncHandDecks()
@@ -694,3 +821,5 @@ while cards_mountain:
     syncHandDecks()
     want_Pon()
     syncHandDecks()
+    SimpleWinCheck()
+SimpleWinCheck()
